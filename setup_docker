@@ -1,13 +1,24 @@
-#!/usr/local/python3
+#!/usr/bin/python3
 
 import getpass
 import os
 
 PKG = "docker-ce"
 
-if module_exists("apt") and PKG in apt_cache and apt_cache[PKG].is_installed:
-  print(PKG + " is already installed, exiting.")
-  sys.exit(0)
+def module_exists(module_name):
+    try:
+        __import__(module_name)
+    except ImportError:
+        return False
+    else:
+        return True
+
+if module_exists("apt"):
+  import apt
+  cache = apt.Cache()
+  if PKG in cache and cache[PKG].is_installed:
+    print(PKG + " is already installed, exiting.")
+    sys.exit(0)
 
 # Install Docker.
 os.system("sudo apt-get update")
@@ -20,9 +31,9 @@ os.system("curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-ke
 os.system('sudo add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) \
-   stable')
+   stable"')
 os.system("sudo apt-get update")
-os.system("sudo apt-get install " + PKG)
+os.system("sudo apt-get -y install " + PKG)
 
 # Avoid having to run all Docker commands with sudo.
 os.system("sudo usermod -aG docker " + getpass.getuser())
