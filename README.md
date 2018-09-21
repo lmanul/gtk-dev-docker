@@ -4,12 +4,12 @@ Easy GTK development environment using Docker
 
 # Usage
 
-If Docker isn't installed yet, run this if your system is Debian-based:
+Very simple:
+
+`./run`
+
+If Docker isn't installed on your system, run this for Debian-based distros:
 
 `./setup_docker`
 
-Then:
-
-'./run'
-
-The first run will take a while, subsequent runs will be very quick.
+and log out and back in.
