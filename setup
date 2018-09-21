@@ -1,22 +1,32 @@
-# TODO: Make this an executable script
+#!/usr/local/python3
+
+import getpass
+import os
+
+PKG = "docker-ce"
+
+if module_exists("apt") and PKG in apt_cache and apt_cache[PKG].is_installed:
+  print(PKG + " is already installed, exiting.")
+  sys.exit(0)
 
 # Install Docker.
-sudo apt-get update
-sudo apt-get install \
+os.system("sudo apt-get update")
+os.system("sudo apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
-    software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository \
+    software-properties-common")
+os.system("curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -")
+os.system('sudo add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) \
-   stable"
-sudo apt-get update
-sudo apt-get install docker-ce
+   stable')
+os.system("sudo apt-get update")
+os.system("sudo apt-get install " + PKG)
 
 # Avoid having to run all Docker commands with sudo.
-# Replace with your username.
-sudo usermod -aG docker manucornet
+os.system("sudo usermod -aG docker " + getpass.getuser())
+
+print("Now please log out and log back in before using Docker")
 
 # Log out and back in.
