@@ -7,6 +7,11 @@ import os
 # git clone https://gitlab.gnome.org/GNOME/gtk.git
 GTK_SRC_LOCATION = "~/repos/gtk"
 
+XSOCKET = "/tmp/.X11-unix/X0"
+
 os.system("docker build -t gtk .")
 
-os.system("docker run -v " + GTK_SRC_LOCATION + ":/media/gtk -it gtk")
+os.system("docker run " + \
+          "-v " + GTK_SRC_LOCATION + ":/media/gtk " + \
+          "-v " + XSOCKET + ":" + XSOCKET + " " + \
+          "-e DISPLAY=$DISPLAY -it gtk")
