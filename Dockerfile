@@ -20,7 +20,8 @@ RUN apt-get -y build-dep libgtk-3-0
 RUN apt-get -y install meson
 
 # Is it a bug that these are not part of build-dep libgtk-3-0?
-RUN apt-get -y install libgstreamer-plugins-bad1.0-dev libgraphene-1.0-dev libvulkan-dev sassc
+RUN apt-get -y install libgstreamer-plugins-bad1.0-dev \
+    libgraphene-1.0-dev libvulkan-dev sassc
 
 # It's easiest to share files with the host and edit files there, but install a 
 # minimal text editor.
