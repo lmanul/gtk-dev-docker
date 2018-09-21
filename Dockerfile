@@ -27,7 +27,28 @@ RUN apt-get -y install libgstreamer-plugins-bad1.0-dev libgraphene-1.0-dev libvu
 RUN apt-get -y install nano
 
 # You can comment out these if bash is good for you.
-RUN apt-get install -y zsh
+RUN apt-get -y install zsh
 RUN zsh
 
-WORKDIR "/media/gtk"
+RUN apt-get -y install sudo
+
+# Some apps to test the X11 connection, e.g. xeyes
+RUN apt-get -y install x11-apps
+
+RUN mkdir -p /home/dev
+RUN mkdir -p /etc/sudoers.d
+
+# Now a few hacky things to share an X11 socket with the host.
+# TODO: Use actual user/group ID instead of 1000
+# Replace 'zsh' with your favorite shell
+RUN export uid=1000 gid=1000 && \
+    echo "dev:x:${uid}:${gid}:Developer,,,:/home/dev:/bin/zsh" >> /etc/passwd && \
+    echo "dev:x:${uid}:" >> /etc/group && \
+    echo "dev ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/dev && \
+    chmod 0440 /etc/sudoers.d/dev && \
+    chown ${uid}:${gid} -R /home/dev
+
+USER dev
+ENV HOME /home/dev
+
+WORKDIR "/home/dev/gtk"
