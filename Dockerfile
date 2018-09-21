@@ -7,8 +7,11 @@ RUN apt-get update
 # Live on the bleeding edge!
 RUN apt-get -y upgrade
 
-# debconf complains without apt-utils, and dialog is needed to configure packages.
-RUN apt-get -y install apt-utils dialog
+# Install packages without asking questions.
+ARG DEBIAN_FRONTEND=noninteractive
+
+# debconf complains without apt-utils.
+RUN apt-get -y install apt-utils
 
 # Install dependencies needed to build GTK.
 RUN apt-get -y build-dep libgtk-3-0
