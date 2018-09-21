@@ -3,6 +3,8 @@
 import os
 
 # Replace this with the location of the gtk src directory on your machine.
+# You can get the sources with:
+# git clone https://gitlab.gnome.org/GNOME/gtk.git
 GTK_SRC_LOCATION = "~/repos/gtk"
 
 os.system("docker build -t gtk .")
