@@ -22,7 +22,7 @@ if module_exists("apt"):
 
 # Install Docker.
 os.system("sudo apt-get update")
-os.system("sudo apt-get install \
+os.system("sudo apt-get -y install \
     apt-transport-https \
     ca-certificates \
     curl \
